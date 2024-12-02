@@ -8,4 +8,4 @@ add:qgnomeplatform-qt6
 add:gnome-extensions-app
 add:gnome-shell-extension-dash-to-dock
 add:gnome-shell-extension-appindicator
-add:gnome-shell-extension-gsconnect
+add:gnome-shell-extension-user-theme

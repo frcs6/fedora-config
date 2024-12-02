@@ -245,10 +245,10 @@ fi
 if [[ "$1" = "scriptupdate" ]]
 then
 	echo $0
-	wget -O- https://raw.githubusercontent.com/aaaaadrien/fedora-config/refs/heads/main/config-fedora.sh > "$0"
+	wget -O- https://raw.githubusercontent.com/frcs6/fedora-config/refs/heads/main/config-fedora.sh > "$0"
 	chmod +x "$0"
 
-	wget -O- -q https://raw.githubusercontent.com/aaaaadrien/fedora-config/refs/heads/main/CHANGELOG.txt | head
+	wget -O- -q https://raw.githubusercontent.com/frcs6/fedora-config/refs/heads/main/CHANGELOG.txt | head
 
 	exit 0;
 fi
@@ -376,15 +376,15 @@ then
 fi
 
 
-### CONFIG DEPOTS
-echo "04- Vérification configuration des dépôts"
-## COPR PERSO
-if check_copr 'adriend/fedora-apps'
-then
-	echo -n "- - - Activation COPR adriend/fedora-apps : "
-	add_copr "adriend/fedora-apps"
-	check_cmd
-fi
+# ### CONFIG DEPOTS
+# echo "04- Vérification configuration des dépôts"
+# ## COPR PERSO
+# if check_copr 'frcs6/fedora-apps'
+# then
+# 	echo -n "- - - Activation COPR frcs6/fedora-apps : "
+# 	add_copr "frcs6/fedora-apps"
+# 	check_cmd
+# fi
 
 
 ## RPMFUSION
@@ -399,20 +399,6 @@ then
 	echo -n "- - - Installation RPM Fusion Nonfree : "
 	add_pkg "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 	check_cmd
-fi
-
-## VIVALDI
-if ! check_repo_file vivaldi.repo
-then
-	echo -n "- - - Installation Vivaldi Repo : "
-	echo "[vivaldi]
-	name=vivaldi
-	baseurl=https://repo.vivaldi.com/archive/rpm/x86_64
-	enabled=1
-	gpgcheck=1
-	gpgkey=http://repo.vivaldi.com/archive/linux_signing_key.pub" 2>/dev/null > /etc/yum.repos.d/vivaldi.repo
-	check_cmd
-	sed -e 's/\t//g' -i /etc/yum.repos.d/vivaldi.repo
 fi
 
 ## GOOGLE CHROME
@@ -573,27 +559,27 @@ do
 	fi
 done < "$ICI/flatpak.list"
 
-### Vérif configuration système
-echo "11- Configuration personnalisée du système"
-SYSCTLFIC="/etc/sysctl.d/adrien.conf"
-if [[ ! -e "$SYSCTLFIC" ]]
-then
-	echo -n "- - - Création du fichier $SYSCTLFIC : "
-	touch "$SYSCTLFIC"
-	check_cmd
-fi
-if [[ $(grep -c 'vm.swappiness' "$SYSCTLFIC") -lt 1 ]]
-then
-	echo -n "- - - Définition du swapiness à 10 : "
-	echo "vm.swappiness = 10" >> "$SYSCTLFIC"
-	check_cmd
-fi
-if [[ $(grep -c 'kernel.sysrq' "$SYSCTLFIC") -lt 1 ]]
-then
-	echo -n "- - - Définition des sysrq à 1 : "
-	echo "kernel.sysrq = 1" >> "$SYSCTLFIC"
-	check_cmd
-fi
+# ### Vérif configuration système
+# echo "11- Configuration personnalisée du système"
+# SYSCTLFIC="/etc/sysctl.d/adrien.conf"
+# if [[ ! -e "$SYSCTLFIC" ]]
+# then
+# 	echo -n "- - - Création du fichier $SYSCTLFIC : "
+# 	touch "$SYSCTLFIC"
+# 	check_cmd
+# fi
+# if [[ $(grep -c 'vm.swappiness' "$SYSCTLFIC") -lt 1 ]]
+# then
+# 	echo -n "- - - Définition du swapiness à 10 : "
+# 	echo "vm.swappiness = 10" >> "$SYSCTLFIC"
+# 	check_cmd
+# fi
+# if [[ $(grep -c 'kernel.sysrq' "$SYSCTLFIC") -lt 1 ]]
+# then
+# 	echo -n "- - - Définition des sysrq à 1 : "
+# 	echo "kernel.sysrq = 1" >> "$SYSCTLFIC"
+# 	check_cmd
+# fi
 
 #PROFILEFIC="/etc/profile.d/adrien.sh"
 #if [[ ! -e "$PROFILEFIC" ]]
